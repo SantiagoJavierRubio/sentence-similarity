@@ -1,14 +1,10 @@
 import os
 from flask import Flask, request, jsonify, abort
-from sentence_transformers import util
-import pickle
+from sentence_transformers import SentenceTransformer, util
 
 app = Flask(__name__)
 
-# model = SentenceTransformer('bert-base-nli-mean-tokens')
-# pickle.dump(model, open('model.sav', 'wb'))
-
-model = pickle.load(open('model.sav', 'rb'))
+model = SentenceTransformer('sentence-transformers/paraphrase-albert-small-v2')
 
 @app.route("/")
 def index():
