@@ -4,7 +4,6 @@ from sentence_transformers import SentenceTransformer, util
 
 app = Flask(__name__)
 
-model = SentenceTransformer('bert-base-nli-mean-tokens')
 
 @app.route("/")
 def index():
@@ -14,6 +13,7 @@ def main():
     inputs = request.get_json(True)
     if "authorization_token" not in inputs or inputs['authorization_token'] != os.environ.get("AUTH_TOKEN"): 
         abort(401)
+    model = SentenceTransformer('bert-base-nli-mean-tokens')
     embeddingOriginal = model.encode(inputs['original'])
     embeddingCompare = model.encode(inputs['answer'])
     cosine_score = util.cos_sim(embeddingOriginal, embeddingCompare)
