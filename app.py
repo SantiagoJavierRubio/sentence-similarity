@@ -1,9 +1,14 @@
 import os
 from flask import Flask, request, jsonify, abort
-from sentence_transformers import SentenceTransformer, util
+from sentence_transformers import util
+import pickle
 
 app = Flask(__name__)
 
+# model = SentenceTransformer('bert-base-nli-mean-tokens')
+# pickle.dump(model, open('model.sav', 'wb'))
+
+model = pickle.load(open('model.sav', 'rb'))
 
 @app.route("/")
 def index():
@@ -13,7 +18,6 @@ def main():
     inputs = request.get_json(True)
     if "authorization_token" not in inputs or inputs['authorization_token'] != os.environ.get("AUTH_TOKEN"): 
         abort(401)
-    model = SentenceTransformer('bert-base-nli-mean-tokens')
     embeddingOriginal = model.encode(inputs['original'])
     embeddingCompare = model.encode(inputs['answer'])
     cosine_score = util.cos_sim(embeddingOriginal, embeddingCompare)
