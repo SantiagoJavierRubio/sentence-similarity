@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM python:3.8-slim-buster
+FROM python:3.8-alpine
 EXPOSE 8080
 WORKDIR /app
 COPY requirements.txt requirements.txt
