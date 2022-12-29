@@ -19,3 +19,6 @@ def main():
     cosine_score = util.cos_sim(embeddingOriginal, embeddingCompare)
     response = dict(score=cosine_score.item())
     return jsonify(response)
+
+def create_app():
+    return app
